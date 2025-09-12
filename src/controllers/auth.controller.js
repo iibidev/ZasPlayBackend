@@ -224,3 +224,12 @@ export const getProfile = async(req, res) =>{
         return res.status(500).json({ error: "Error en el servidor" });
     }
 }
+
+export const getCookie = (req, res) =>{
+  const token = req.cookies.token;
+  if (token) {
+    res.status(200).json(token);
+  } else {
+    res.status(401).json({ error: 'No token found' });
+  }
+}

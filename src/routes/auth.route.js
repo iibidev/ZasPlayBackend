@@ -1,6 +1,6 @@
 import express from "express";
 import { vistaLogin, vistaRegister } from "./../controllers/view.controller.js";
-import { viewEdit, getProfile, login, logout, myInfo, register, update, updateProfilePic, updateAvatar } from "../controllers/auth.controller.js";
+import { viewEdit, getProfile, login, logout, myInfo, register, update, updateProfilePic, updateAvatar, getCookie } from "../controllers/auth.controller.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 import multer from 'multer';
 
@@ -35,5 +35,7 @@ route.put("/update", verifyToken, update);
 route.put("/updateAvatar", verifyToken, updateAvatar);
 
 route.put("/updatePic", verifyToken, upload.single("profilePic"), updateProfilePic);
+
+route.get("/get-cookie", getCookie);
 
 export default route;
