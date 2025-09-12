@@ -33,7 +33,7 @@ export const login = async(req, res)=>{
         res.cookie("token", token, {
         httpOnly: true,       // evita acceso desde JS del navegador
         secure: true,        // poner en true si usas HTTPS
-        sameSite: "lax",      // o "strict" para más seguridad
+        sameSite: "none",      // o "strict" para más seguridad
         maxAge: 7 * 24 * 60 * 60 * 1000 
         });
 
@@ -64,7 +64,7 @@ export const register = async(req, res)=>{
         res.cookie("token", token, {
         httpOnly: true,
         secure: true,        
-        sameSite: "lax",   
+        sameSite: "none",   
         maxAge: 7 * 24 * 60 * 60 * 1000 
         });
 
