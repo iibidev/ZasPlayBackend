@@ -3,7 +3,6 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import Friend from "../models/Friend.js";
 import path from "path";
-import { vistaLogin } from "./view.controller.js";
 import cloudinary from "./../config/cloudinary.js";
 
 const avatars = [
@@ -29,15 +28,7 @@ export const login = async(req, res)=>{
             process.env.JWT_SECRET, 
             { expiresIn: "7d" });
         
-        // Guardar el token en una cookie
-        res.cookie("token", token, {
-        httpOnly: true,       // evita acceso desde JS del navegador
-        secure: true,        // poner en true si usas HTTPS
-        sameSite: "lax",      // o "strict" para más seguridad
-        maxAge: 7 * 24 * 60 * 60 * 1000 
-        });
-
-        res.json({ ok: true, red: process.env.FRONTURL });
+        res.json({ ok: true, token });
     } catch (error) {
         console.log(error);
         return res.json({ ok: false, error: "Error al iniciar sesión" })
@@ -61,31 +52,21 @@ export const register = async(req, res)=>{
         process.env.JWT_SECRET, 
         { expiresIn: "7d" });
         
-        res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,        
-        sameSite: "lax",   
-        maxAge: 7 * 24 * 60 * 60 * 1000 
-        });
-
-        res.json({ ok: true, red: process.env.FRONTURL });
+        res.json({ ok: true, token });
     } catch (error) {
         console.log(error)
         return res.json({ ok: false, error: "Error en el servidor." });
     }
 }
 
-export const logout = (req, res)=>{
-    res.clearCookie("token");
-    return res.sendFile(path.join(process.cwd(), "src", "view", "login.html"));
-}
-
 export const viewEdit = async(req, res)=>{
+    
+    const token = req.body.token;
     try {
-        const user = await User.findById(req.user);
+        const user = await User.findById(req.body.userId);
         if(!user) return vistaLogin(req, res);
 
-        return res.render("edit", { user, redirect: process.env.FRONTURL });
+        return res.render("edit", { user, redirect: process.env.FRONTURL, token });
     } catch (error) {
         console.log(error);
         return vistaLogin(req, res);

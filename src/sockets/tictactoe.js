@@ -1,5 +1,3 @@
-import GameRoom from "../models/GameRoom.js";
-import GameStat from "../models/GameStat.js";
 import { createStats } from "../utils/createStats.js";
 
 export const tictactoe = (io, socket) =>{
@@ -33,9 +31,13 @@ export const tictactoe = (io, socket) =>{
         board[play.position] = play.icon;
         const result = checkWinner(board);
         io.to(room.code).emit("tic-boardUpdate", board);
+        console.log(room);
+        
 
         if(result){            
-            const stats = createStats(room);
+            const stats = await createStats(room);
+            console.log(stats);
+            
 
             if(result === "draw"){
                 io.to(room.players[0].user._id).emit("tic-draw", stats[0]);

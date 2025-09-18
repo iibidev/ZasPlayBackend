@@ -1,6 +1,5 @@
 import express from "express";
-import { vistaLogin, vistaRegister } from "./../controllers/view.controller.js";
-import { viewEdit, getProfile, login, logout, myInfo, register, update, updateProfilePic, updateAvatar } from "../controllers/auth.controller.js";
+import { viewEdit, getProfile, login, myInfo, register, update, updateProfilePic, updateAvatar } from "../controllers/auth.controller.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 import multer from 'multer';
 
@@ -12,15 +11,7 @@ const upload = multer({ storage });
 const route = express.Router();
 
 
-// Ruta de login
-route.get("/login", vistaLogin);
-
-// Ruta de register
-route.get("/register", vistaRegister);
-
-route.get("/logout", logout);
-
-route.get("/edit", verifyToken, viewEdit);
+route.post("/edit", verifyToken, viewEdit);
 
 route.get("/myInfo", verifyToken, myInfo);
 
