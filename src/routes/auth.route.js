@@ -27,4 +27,6 @@ route.put("/updateAvatar", verifyToken, updateAvatar);
 
 route.put("/updatePic", verifyToken, upload.single("profilePic"), updateProfilePic);
 
+route.get("/get-cookie", getCookie);
+
 export default route;

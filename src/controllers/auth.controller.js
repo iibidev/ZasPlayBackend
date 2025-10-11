@@ -27,7 +27,7 @@ export const login = async(req, res)=>{
         const token = jwt.sign({ id: user._id }, 
             process.env.JWT_SECRET, 
             { expiresIn: "7d" });
-        
+
         res.json({ ok: true, token });
     } catch (error) {
         console.log(error);
@@ -204,4 +204,13 @@ export const getProfile = async(req, res) =>{
         console.log(error);
         return res.status(500).json({ error: "Error en el servidor" });
     }
+}
+
+export const getCookie = (req, res) =>{
+  const token = req.cookies.token;
+  if (token) {
+    res.status(200).json(token);
+  } else {
+    res.status(401).json({ error: 'No token found' });
+  }
 }
