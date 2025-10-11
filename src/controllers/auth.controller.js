@@ -59,19 +59,6 @@ export const register = async(req, res)=>{
     }
 }
 
-export const viewEdit = async(req, res)=>{
-    
-    const token = req.body.token;
-    try {
-        const user = await User.findById(req.body.userId);
-        if(!user) return vistaLogin(req, res);
-
-        return res.render("edit", { user, redirect: process.env.FRONTURL, token });
-    } catch (error) {
-        console.log(error);
-        return vistaLogin(req, res);
-    }
-}
 
 export const updateAvatar = async(req, res) =>{
     const { avatar } = req.body;

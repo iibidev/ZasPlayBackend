@@ -1,5 +1,5 @@
 import express from "express";
-import { viewEdit, getProfile, login, myInfo, register, update, updateProfilePic, updateAvatar } from "../controllers/auth.controller.js";
+import { getProfile, login, myInfo, register, update, updateProfilePic, updateAvatar } from "../controllers/auth.controller.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 import multer from 'multer';
 
@@ -9,9 +9,6 @@ const upload = multer({ storage });
 
 
 const route = express.Router();
-
-
-route.post("/edit", verifyToken, viewEdit);
 
 route.get("/myInfo", verifyToken, myInfo);
 
